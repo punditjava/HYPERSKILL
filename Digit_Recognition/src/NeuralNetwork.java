@@ -1,6 +1,6 @@
 public class NeuralNetwork
 {
-    private String filename = "text.txt";
+    private String filename;
     private int [] inputNeurons;
     Learn learn;
     Guess guess;

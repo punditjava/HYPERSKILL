@@ -24,7 +24,6 @@ public class StadartGuess implements Guess
                     r += weight[i][k] * inputNeurons[k];
                 }
                 outputNeurons.add(r);
-                System.out.println(r);
             }
             System.out.println("This number is " + outputNeurons.indexOf(Collections.max(outputNeurons)));
 

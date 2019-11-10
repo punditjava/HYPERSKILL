@@ -11,22 +11,22 @@ public class SigmoidFunction implements Learn
     private final int WEIGHT_SIZE = 15;
     String filename;
 
-    private final int [][] a = { {+1, +1, +1, +1, -1, +1, +1, -1, +1, +1, -1, +1, +1, +1, +1},//0
-            {-1, +1, -1, -1, +1, -1, -1, +1, -1, -1, +1, -1, -1, +1, -1},//1
-            {+1, +1, +1, -1, -1, +1, +1, +1, +1, +1, -1, -1, +1, +1, +1},//2
-            {+1, +1, +1, -1, -1, +1, +1, +1, +1, -1, -1, +1, +1, +1, +1},//3
-            {+1, -1, +1, +1, -1, +1, +1, +1, +1, -1, -1, +1, -1, -1, +1},//4
-            {+1, +1, +1, +1, -1, -1, +1, +1, +1, -1, -1, +1, +1, +1, +1},//5
-            {+1, +1, +1, +1, -1, -1, +1, +1, +1, +1, -1, +1, +1, +1, +1},//6
-            {+1, +1, +1, -1, -1, +1, -1, -1, +1, -1, -1, +1, -1, -1, +1},//7
-            {+1, +1, +1, +1, -1, +1, +1, +1, +1, +1, -1, +1, +1, +1, +1},//8
-            {+1, +1, +1, +1, -1, +1, +1, +1, +1, -1, -1, +1, +1, +1, +1}};//9
+    private final int [][] a = { {+1, +1, +1, +1, 0, +1, +1, 0, +1, +1, 0, +1, +1, +1, +1},//0
+            {0, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1, 0},//1
+            {+1, +1, +1, 0, 0, +1, +1, +1, +1, +1, 0, 0, +1, +1, +1},//2
+            {+1, +1, +1, 0, 0, +1, +1, +1, +1, 0, 0, +1, +1, +1, +1},//3
+            {+1, 0, +1, +1, 0, +1, +1, +1, +1, 0, 0, +1, 0, 0, +1},//4
+            {+1, +1, +1, +1, 0, 0, +1, +1, +1, 0, 0, +1, +1, +1, +1},//5
+            {+1, +1, +1, +1, 0, 0, +1, +1, +1, +1, 0, +1, +1, +1, +1},//6
+            {+1, +1, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1},//7
+            {+1, +1, +1, +1, 0, +1, +1, +1, +1, +1, 0, +1, +1, +1, +1},//8
+            {+1, +1, +1, +1, 0, +1, +1, +1, +1, 0, 0, +1, +1, +1, +1}};//9
 
     @Override
     public void learning(String filename)
     {
         this.filename = filename;
-
+        System.out.println("Learning...");
         double[][] weight = new double[10][WEIGHT_SIZE];
         for (int j = 0; j < 10; j++) {
             Arrays.setAll(weight[j], i -> new Random().nextGaussian());
@@ -34,7 +34,7 @@ public class SigmoidFunction implements Learn
         double [][] dw = new double[10][WEIGHT_SIZE];
         final double RATE = 0.5;
         int l = 0;
-        while (l < 500) {
+        while (l < 100) {
             for (int i = 0; i < 10; i++) {
 
                 for (int k = 0; k < 10; k++) {
@@ -75,6 +75,7 @@ public class SigmoidFunction implements Learn
                 out.print("\n");
             }
             out.flush();
+            System.out.println("Done! Saved to the file.");
         } catch (IOException e) {
             e.printStackTrace();
         }
