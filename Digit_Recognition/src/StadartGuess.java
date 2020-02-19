@@ -2,8 +2,6 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 
 public class StadartGuess implements Guess
 {

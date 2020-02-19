@@ -1,8 +1,7 @@
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 
@@ -10,6 +9,8 @@ public class SigmoidFunction implements Learn
 {
     private final int WEIGHT_SIZE = 15;
     String filename;
+    private HashMap<Integer,Matrix> idealNeurons = new HashMap<>();
+    private HashMap<Integer,Matrix> weight = new HashMap<>();
 
     private final int [][] a = { {+1, +1, +1, +1, 0, +1, +1, 0, +1, +1, 0, +1, +1, +1, +1},//0
             {0, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1, 0, 0, +1, 0},//1
@@ -23,18 +24,46 @@ public class SigmoidFunction implements Learn
             {+1, +1, +1, +1, 0, +1, +1, +1, +1, 0, 0, +1, +1, +1, +1}};//9
 
     @Override
+    public void searchIdealNeurons(int[] quantity)
+    {
+        final int length = quantity.length;
+
+        double [] [] E = new double[quantity[length - 1]][quantity[length - 1]];
+        for (int i = 0; i < length; i ++ )
+            E[i][i] = 1;
+            idealNeurons.put(length - 1, new Matrix(E));
+
+        for (int i = length - 2; i > 0; i--) {
+
+            double [][] randomWeight = new double[quantity[length - 2]][idealNeurons.get(i + 1).getColumns()];
+            for (int j = 0; j < 10; j++) {
+                Arrays.setAll(randomWeight[j], e -> new Random().nextGaussian());
+            }
+            weight.put(i, new Matrix(randomWeight));
+
+            for (int k = 0; k < quantity[i]; k++) {
+                double res = 0;
+                for (int l = 0; l < idealNeurons.get(i + 1).getColumns(); l++) {
+                    res +=
+                }
+            }
+
+
+
+
+        }
+
+    }
+
+    @Override
     public void learning(String filename)
     {
         this.filename = filename;
         System.out.println("Learning...");
-        double[][] weight = new double[10][WEIGHT_SIZE];
-        for (int j = 0; j < 10; j++) {
-            Arrays.setAll(weight[j], i -> new Random().nextGaussian());
-        }
         double [][] dw = new double[10][WEIGHT_SIZE];
         final double RATE = 0.5;
         int l = 0;
-        while (l < 100) {
+        while (l < 1000) {
             for (int i = 0; i < 10; i++) {
 
                 for (int k = 0; k < 10; k++) {
@@ -55,7 +84,7 @@ public class SigmoidFunction implements Learn
             }
             l++;
         }
-        write(weight);
+        write(weight, this.filename);
     }
 
     private double Sigma(double [] weight, int num)
@@ -66,18 +95,5 @@ public class SigmoidFunction implements Learn
         }
         return  1/(1 + Math.exp(-res));
     }
-    private void write(double [][] weight)
-    {
-        try {
-            PrintWriter out = new PrintWriter(new FileOutputStream(filename));
-            for (int i = 0; i < 10; i++) {
-                Arrays.stream(weight[i]).forEach((d) -> out.print(d + " "));
-                out.print("\n");
-            }
-            out.flush();
-            System.out.println("Done! Saved to the file.");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }
